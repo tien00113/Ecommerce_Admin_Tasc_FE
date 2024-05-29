@@ -1,14 +1,16 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import { AuthenComponent } from './authen.component';
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('AuthenComponent', () => {
+  let component: AuthenComponent;
+  let fixture: ComponentFixture<AuthenComponent>;
+
+ 
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(AuthenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
