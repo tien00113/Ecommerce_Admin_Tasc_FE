@@ -2,12 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from '../ngrx/User/user.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../models/AppState';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  imports: [],
+  imports: [CommonModule],
   standalone: true,
   providers: [UserService]
 })
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
     this.store.pipe(select((store) => store.user)).subscribe((user) => {
       this.userProfile = user.userProfile;
     });
+
+    console.log("user profile là: ", this.userProfile);
 
   }
 

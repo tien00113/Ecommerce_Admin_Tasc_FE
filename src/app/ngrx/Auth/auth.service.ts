@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import { catchError, map, of } from "rxjs";
 import { loginFailure, loginSuccess, registerFailure, registerSuccess } from "./auth.action";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: "root",
@@ -13,17 +14,11 @@ import { loginFailure, loginSuccess, registerFailure, registerSuccess } from "./
 export class AuthSerivce {
     private apiUrl = BASE_URL + "/auth";
 
-    constructor(private http: HttpClient, private store: Store) { }
+    constructor(private http: HttpClient, private store: Store, private router: Router) { }
 
     login(loginData: any) {
         return this.http.post(`${this.apiUrl}/signin`, loginData).pipe(
             map((user: any) => {
-                // console.log("login user", user);
-
-                // localStorage.setItem('jwt', user.token);
-
-
-
                 if (user.token) {
                     localStorage.setItem('jwt', user.token);
                 }
@@ -33,6 +28,7 @@ export class AuthSerivce {
                 return loginSuccess({ user });
             }),
             catchError((error) => {
+                localStorage.removeItem("jwt");
                 return of(
                     loginFailure(
                         error.response && error.response.data.message ? error.response.data.message : error.message
@@ -63,4 +59,5 @@ export class AuthSerivce {
             })
         ).subscribe((action) => this.store.dispatch(action))
     }
+
 }

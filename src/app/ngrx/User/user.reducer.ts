@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { getUserProfile, getUserProfileFailure, getUserProfileSuccess } from "./user.action";
+import { getUserProfile, getUserProfileFailure, getUserProfileSuccess, logoutSuccess } from "./user.action";
 
 const initialState = {
     userProfile: null,
@@ -26,4 +26,5 @@ export const userReducer = createReducer(
         loading: false,
         error: error
     })),
+    on(logoutSuccess, () => (initialState))
 )

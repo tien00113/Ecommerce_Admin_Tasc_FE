@@ -14,5 +14,5 @@ export interface ProductFilterRequest {
     maxPrice: number;
     categoryId: number | null;
     color: string | null;
-    pageable: Pageable;
+    pageableDTO: Pageable;
 }

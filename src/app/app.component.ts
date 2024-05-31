@@ -1,12 +1,8 @@
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { initFlowbite } from 'flowbite';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AsyncLocalStorage } from 'async_hooks';
-import { StoreModule } from '@ngrx/store';
-import { authReducer } from './ngrx/Auth/auth.reducer';
-import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './ngrx/User/user.service';
 
 @Component({
@@ -14,7 +10,8 @@ import { UserService } from './ngrx/User/user.service';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, HttpClientModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [UserService]
 })
 export class AppComponent implements OnInit{
   title = 'Ecommerce_Admin_Tasc_FE';
@@ -29,6 +26,9 @@ export class AppComponent implements OnInit{
           initFlowbite();
         })
       }
+
+
+      
   }
 
 }
