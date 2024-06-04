@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { catchError, map, of } from "rxjs";
 import { loginFailure, loginSuccess, registerFailure, registerSuccess } from "./auth.action";
 import { Router } from "@angular/router";
+import { reqHeaders } from "../../config/requestHeader";
 
 @Injectable({
     providedIn: "root",

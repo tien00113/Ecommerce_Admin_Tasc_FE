@@ -16,8 +16,16 @@ export class ProductService {
 
     private _closePreview$ = new Subject();
     public closePreview$ = this._closePreview$.asObservable();
+
     closePreview(reason?: any) {
         this._closePreview$.next(reason);
+    }
+
+    private _closeUpdate$ = new Subject();
+    public closeUpdate$ = this._closeUpdate$.asObservable();
+
+    closeUpdate(reason?: any) {
+        this._closeUpdate$.next(reason);
     }
 
     constructor(private http: HttpClient, private store: Store) { }
@@ -31,8 +39,6 @@ export class ProductService {
             catchError((error) => {
 
                 console.log("lỗi: ", error);
-                console.log("phân trang: ")
-
                 return of(
                     getAllProductFailure(
                         error.response && error.response.data.message ? error.response.data.message : error.message
@@ -83,7 +89,6 @@ export class ProductService {
         })
     };
 
-
     updateProduct(product: any) {
         return this.http.put(`${this.apiUrl}/admin/product/update`, product, { headers: reqHeaders }).pipe(
             map((obj: any) => {
@@ -93,6 +98,10 @@ export class ProductService {
             }),
             catchError((error) => {
                 console.log("error update product");
+
+                console.log("dữ liệu nhận: ", product)
+                
+                console.log("header: ", reqHeaders);
 
                 return of(
                     updateProductFailure(

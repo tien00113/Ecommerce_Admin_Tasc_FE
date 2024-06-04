@@ -17,7 +17,6 @@ export class PreviewComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
-    // debugger
 
     if (this.eRef.nativeElement.contains(event.target) && event.target.id == 'preview-backdrop') {
       this.productService.closePreview()
@@ -27,6 +26,7 @@ export class PreviewComponent implements OnInit {
   constructor(private productService: ProductService, private eRef: ElementRef) { }
 
   ngOnInit() {
+    
   }
 
   onUpdate() {

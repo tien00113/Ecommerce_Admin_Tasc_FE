@@ -8,6 +8,7 @@ import { provideStore } from '@ngrx/store';
 import { authReducer } from './ngrx/Auth/auth.reducer';
 import { userReducer } from './ngrx/User/user.reducer';
 import { productReducer } from './ngrx/Product/product.reducer';
+import { categoryReducer } from './ngrx/Category/category.reducer';
 // import { HttpHeadersInterceptor } from './config/headerInterceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
       auth: authReducer,
       user: userReducer,
       product: productReducer,
+      category: categoryReducer
     }),
 
     // { provide: HTTP_INTERCEPTORS, useClass: HttpHeadersInterceptor, multi: true },

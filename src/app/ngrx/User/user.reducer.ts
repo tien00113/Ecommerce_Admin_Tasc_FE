@@ -18,8 +18,9 @@ export const userReducer = createReducer(
     on(getUserProfileSuccess, (state, {userProfile}) => ({
         ...state,
         loading: false,
+        userProfile: userProfile,
         error: null,
-        userProfile
+
     })),
     on(getUserProfileFailure, (state, {error}) => ({
         ...state,

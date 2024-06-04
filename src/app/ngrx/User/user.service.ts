@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { catchError, map, of } from "rxjs";
+import { Observable, catchError, map, of } from "rxjs";
 import { BASE_URL } from "../../config/api";
 import { getUserProfileFailure, getUserProfileSuccess, logoutSuccess } from "./user.action";
 import { reqHeaders } from "../../config/requestHeader";
@@ -15,7 +15,7 @@ export class UserService {
 
     constructor(private http: HttpClient, private store: Store) {}
 
-    getUserProfile() {
+    getUserProfile(): Observable<any> {
 
         return this.http.get(`${this.apiUrl}/user/profile`, {headers: reqHeaders}).pipe(
             map((user: any) => {
@@ -29,7 +29,7 @@ export class UserService {
                     )
                 )
             })
-        ).subscribe((action) => this.store.dispatch(action));
+        )
     }
 
     logout() {

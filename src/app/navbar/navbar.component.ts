@@ -1,8 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../ngrx/User/user.service';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../models/AppState';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { CategoryService } from '../ngrx/Category/category.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,24 +16,24 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
 
+  userProfile$: Observable<any>;
+
   userProfile: any;
 
-  constructor(private userService: UserService, private store: Store<AppState>,
-  ) { }
+  constructor(private store: Store<AppState>
+  ) {
+    this.userProfile$ = this.store.select(state => state.user.userProfile);
+
+  }
 
 
   ngOnInit() {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      this.userService.getUserProfile();
-    }
-
-    this.store.pipe(select((store) => store.user)).subscribe((user) => {
-      this.userProfile = user.userProfile;
-    });
-
-    console.log("user profile là: ", this.userProfile);
-
+    // this.store.dispatch(getUserProfile());
+    this.userProfile$.subscribe(
+      (userProfile) => {
+        this.userProfile = userProfile;
+      }
+    )
   }
 
 }

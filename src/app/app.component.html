@@ -1,8 +1,12 @@
-<div class="relative">
+<ng-container *ngIf="auth; else authenTmp" class="relative">
   <div class="fixed w-full z-50">
     <app-navbar></app-navbar>
   </div>
   <div class="pt-16">
     <router-outlet></router-outlet>
   </div>
-</div>
+</ng-container>
+
+<ng-template #authenTmp>
+  <app-authen></app-authen>
+</ng-template>

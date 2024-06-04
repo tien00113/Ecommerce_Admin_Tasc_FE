@@ -22,7 +22,11 @@ export class ProductComponent implements OnInit {
 
   @ViewChild('preview', { read: ViewContainerRef, static: true })
   componentRef: ComponentRef<PreviewComponent>;
+
+  @ViewChild('update', {read: ViewContainerRef, static: true})
   componentcopyRef: ComponentRef<UpdateProductComponent>;
+
+
   obj: any;
 
   totalPages!: number;
@@ -64,6 +68,7 @@ export class ProductComponent implements OnInit {
     private store: Store<AppState>,
     private formBuilder: FormBuilder,
     private container: ViewContainerRef,
+    private containerCopy: ViewContainerRef,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -79,13 +84,25 @@ export class ProductComponent implements OnInit {
     });
 
     this.productService.closePreview$.subscribe(res => {
-      this.container.clear();
+      // this.container.clear();
       if (this.componentRef) {
         this.componentRef.destroy();
       }
       if (res) {
         //goi lai du lieu neu an updates
 
+      }
+    })
+
+    this.productService.closeUpdate$.subscribe(res => {
+      this.containerCopy.clear();
+
+      if (this.componentcopyRef) {
+        this.componentcopyRef.destroy();
+      }
+
+      if (res) {
+        //
       }
     })
   }
@@ -131,9 +148,7 @@ export class ProductComponent implements OnInit {
 
   async saveProduct() {
     if (this.uploadComponent) {
-      this.loading = true;
-      // await this.uploadComponent.onSave();
-      // await this.addProductSubmit();
+      // this.loading = true;
       const urls = await this.uploadComponent.uploadFiles();
 
       const imageUrlString = urls.join(',');
@@ -142,7 +157,9 @@ export class ProductComponent implements OnInit {
       });
       await this.addProductSubmit();
       console.log(this.createProductForm.value);
-      this.loading = false;
+      // setTimeout(() => {
+      //   this.loading = false;
+      // }, 1500);
       this.closeModal();
     }
     else {
@@ -180,12 +197,13 @@ export class ProductComponent implements OnInit {
   showUpdate(productId: any) {
     this.productService.getProductDetail(productId);
 
+
     this.store.pipe(select((store) => store.product.product)).subscribe((product) => {
 
       this.productDetail = product;
-      this.container.clear()
-      this.componentcopyRef = this.container.createComponent(UpdateProductComponent)
-      this.componentcopyRef.setInput('data', this.productDetail)
+      this.containerCopy.clear()
+      this.componentcopyRef = this.containerCopy.createComponent(UpdateProductComponent)
+      this.componentcopyRef.setInput('data', this.productDetail);
       this.cdr.detectChanges()
     });
   }
